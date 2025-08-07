@@ -9,7 +9,7 @@ for the ASGI application.
 
 """
 
-from typing import Iterable
+from typing import Iterable, Optional
 
 import a2wsgi
 from a2wsgi.asgi import ASGIResponder
@@ -23,7 +23,7 @@ class ASGIMiddleware(a2wsgi.ASGIMiddleware):
     def __init__(
         self,
         app: ASGIApp,
-        wait_time: float | None = None,
+        wait_time: Optional[float] = None,
     ) -> None:
         # We don't want to use the default event loop policy
         # because we want to manage the event loop ourselves
