@@ -5,7 +5,7 @@ import queue
 import threading
 from collections import defaultdict
 from contextlib import contextmanager
-from typing import Generator
+from typing import Generator, Optional
 
 from odoo.api import Environment
 
@@ -121,7 +121,7 @@ class FastApiAppPool:
             self.invalidate(env)
         self.cache_sequence = cache_sequence
 
-    def invalidate(self, env: Environment, root_path: str | None = None) -> None:
+    def invalidate(self, env: Environment, root_path: Optional[str] = None) -> None:
         db_name = env.cr.dbname
         if root_path:
             self._queue_by_db_by_root_path[db_name][root_path] = queue.Queue()
