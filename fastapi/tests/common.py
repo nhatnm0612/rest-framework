@@ -3,7 +3,7 @@
 import logging
 from contextlib import contextmanager
 from functools import partial
-from typing import Any, Callable, Dict
+from typing import Any, Callable, Dict, Optional
 
 from starlette import status
 from starlette.requests import Request
@@ -76,11 +76,11 @@ class FastAPITransactionCase(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.default_fastapi_app: FastAPI | None = None
-        cls.default_fastapi_router: APIRouter | None = None
+        cls.default_fastapi_app: Optional[FastAPI] = None
+        cls.default_fastapi_router: Optional[APIRouter] = None
         cls.default_fastapi_odoo_env: Environment = cls.env
-        cls.default_fastapi_running_user: Users | None = None
-        cls.default_fastapi_authenticated_partner: Partner | None = None
+        cls.default_fastapi_running_user: Optional[Users] = None
+        cls.default_fastapi_authenticated_partner: Optional[Partner] = None
         cls.default_fastapi_dependency_overrides: Dict[
             Callable[..., Any], Callable[..., Any]
         ] = {}
@@ -88,10 +88,10 @@ class FastAPITransactionCase(TransactionCase):
     @contextmanager
     def _create_test_client(
         self,
-        app: FastAPI | None = None,
-        router: APIRouter | None = None,
-        user: Users | None = None,
-        partner: Partner | None = None,
+        app: Optional[FastAPI] = None,
+        router: Optional[APIRouter] = None,
+        user: Optional[Users] = None,
+        partner: Optional[Partner] = None,
         env: Environment = None,
         dependency_overrides: Dict[Callable[..., Any], Callable[..., Any]] = None,
         raise_server_exceptions: bool = True,

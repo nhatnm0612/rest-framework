@@ -4,7 +4,7 @@
 import logging
 from functools import partial
 from itertools import chain
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from starlette.middleware import Middleware
 from starlette.routing import Mount
@@ -241,7 +241,7 @@ class FastapiEndpoint(models.Model):
         return False
 
     @api.model
-    def _find_first_matching_url_path(self, paths, prefix) -> str | None:
+    def _find_first_matching_url_path(self, paths, prefix) -> Optional[str]:
         """
         Return the first path that is a subpath of 'prefix',
         ordered by longest URL path first (most number of segments).
